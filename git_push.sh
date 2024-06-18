@@ -21,3 +21,6 @@ git commit -m "$msg"
 
 # Push to the current branch
 git push origin "$branch_now"
+
+
+# git checkout -b Appwrite-Todo-App
