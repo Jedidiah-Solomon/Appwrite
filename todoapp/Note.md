@@ -108,3 +108,39 @@ Database -> Collections -> Documents
 2. Read - getTask()
 3. Update - //UPDATE TASK EVENT HANDLER
 4. Delete - //DELETE TASK EVENT HANDLER
+
+### Using
+
+```
+db.createDocument();
+db.listDocuments();
+db.updateDocument();
+db.deleteDocument();
+```
+
+Note: we also have `db.getDocument();`
+
+##### Examples
+
+1. `db.createDocument(collectionId, documentId, data, permissions);`
+2. `db.listDocuments(collectionId, filters, limit, offset);`
+3. `db.updateDocument(collectionId, documentId, data, permissions);`
+4. `db.deleteDocument(collectionId, documentId);`
+5. `db.getDocument(collectionId, documentId);`
+
+```
+List documents
+Retrieves a list of documents from a collection. This is useful when you need to get multiple documents at once, often with optional filters, limit, and offset.
+Returns an array of documents.
+```
+
+```
+Get a specific document
+Retrieves a single document by its unique ID. This is useful when you need to get the details of a specific document.
+Returns a single document object.
+
+```
+
+```
+
+```
