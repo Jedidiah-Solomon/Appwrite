@@ -24,3 +24,6 @@ git push origin "$branch_now"
 
 
 # git checkout -b Appwrite-Todo-App
+# git rm -rf .
+# git commit -m "Initialize Appwrite-Todo-App branch"
+# git push -u origin Appwrite-Todo-App
