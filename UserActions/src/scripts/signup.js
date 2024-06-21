@@ -1,6 +1,6 @@
 import { Client, Account, ID, AppwriteException } from "appwrite";
 
-console.log("Welcome to Signup Page");
+console.log("Welcome to Signup Page!!!");
 
 const client = new Client();
 
@@ -32,8 +32,11 @@ form.addEventListener("submit", async (e) => {
     alert(`User created successfully and your ID is: ${response.$id}`);
     form.reset();
 
-    // Wait for the email to be sent before redirecting
-    await sendSignupEmail(email);
+    // Send email asynchronously
+    sendSignupEmail(email).catch((error) => {
+      console.error("Error sending email:", error);
+      alert("Error sending email:", error);
+    });
     window.location.href = "/pages/login.html";
   } catch (error) {
     handleError(error);
@@ -66,7 +69,7 @@ async function createUserWithRetry(
 
 async function sendSignupEmail(email) {
   try {
-    const response = await fetch("http://localhost:3000/send-email", {
+    const response = await fetch("http://localhost:5000/send-email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -76,7 +79,7 @@ async function sendSignupEmail(email) {
 
     if (response.ok) {
       console.log("Email sent successfully");
-      alert("Email sent successfully");
+      alert("Email sent successfully!! Please check your mail");
     } else {
       console.error("Error sending email");
       alert("Error sending email");
