@@ -1,0 +1,26 @@
+{
+  "name": "useractions",
+  "private": true,
+  "version": "1.0.3",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "start": "vite preview",
+    "build:preview": "concurrently \"vite build\" \"vite preview\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "vite": "^5.2.0"
+  },
+  "dependencies": {
+    "appwrite": "^15.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "glob": "^10.4.2",
+    "nodemailer": "^6.9.14",
+    "path": "^0.12.7",
+    "url": "^0.11.3"
+  }
+}
