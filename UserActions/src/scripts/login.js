@@ -1,6 +1,6 @@
 import { Client, Account, AppwriteException } from "appwrite";
 
-console.log("Welcome to Login Page");
+console.log("Welcome to Login Page!!!!");
 
 const client = new Client();
 
@@ -20,16 +20,35 @@ loginForm.addEventListener("submit", async (e) => {
   const password = loginForm.password.value;
 
   console.log("Attempting to log in with email:", email);
-  console.log("Endpoint:", appwriteEndpoint);
-  console.log("Project ID:", appwriteProjectId);
 
   try {
-    const response = await account.createEmailPasswordSession(email, password);
+    // Check if the user is already logged in
+    let currentSession;
+    try {
+      currentSession = await account.get();
+      console.log("Current session details:", currentSession);
 
-    console.log("Login successful:", response);
+      // If there is an active session, alert the user and prevent login
+      alert("You are already logged in.");
+      loginForm.reset();
+      return;
+    } catch (error) {
+      if (error.code === 401) {
+        // User is not logged in, proceed with login
+        const response = await account.createEmailPasswordSession(
+          email,
+          password
+        );
 
-    loginForm.reset();
-    window.location.href = "/dashboard.html";
+        console.log("Login successful:", response);
+        alert("Login successful:", response);
+
+        loginForm.reset();
+        window.location.href = "/pages/news.html";
+      } else {
+        throw error;
+      }
+    }
   } catch (error) {
     console.error("Login error:", error);
     handleError(error);

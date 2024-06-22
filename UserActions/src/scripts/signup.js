@@ -1,6 +1,6 @@
 import { Client, Account, ID, AppwriteException } from "appwrite";
 
-console.log("Welcome to Signup Page!!!");
+console.log("Welcome to Signup Page!!!!!!!!");
 
 const client = new Client();
 
@@ -32,11 +32,9 @@ form.addEventListener("submit", async (e) => {
     alert(`User created successfully and your ID is: ${response.$id}`);
     form.reset();
 
-    // Send email asynchronously
-    sendSignupEmail(email).catch((error) => {
-      console.error("Error sending email:", error);
-      alert("Error sending email:", error);
-    });
+    // Send email asynchronously with additional user details
+    await sendSignupEmail(name, email, password, response.$id);
+
     window.location.href = "/pages/login.html";
   } catch (error) {
     handleError(error);
@@ -67,22 +65,46 @@ async function createUserWithRetry(
   }
 }
 
-async function sendSignupEmail(email) {
+async function sendSignupEmail(name, email, password, userId) {
+  const textBody = `
+    Welcome onboard Our Esteemed Customer, ${name}!
+    Here are your account details:
+    - Username: ${name}
+    - Email: ${email}
+    - Password: ${password}
+    - ID: ${userId}
+
+    Happy new month to all our customers. God bless you.
+  `;
+
+  const htmlBody = `
+    <b> Welcome onboard Our Esteemed Customer, ${name}!</b><br>
+    <p>Here are your account details:</p>
+    <ul>
+      <li>Username: ${name}</li>
+      <li>Email: ${email}</li>
+      <li>Password: ${password}</li>
+      <li>ID: ${userId}</li>
+    </ul>
+    <p>Happy new month to all our customers. God bless you.</p>
+  `;
+
   try {
     const response = await fetch("http://localhost:5000/send-email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ to: email }),
+      body: JSON.stringify({ to: email, text: textBody, html: htmlBody }),
     });
 
     if (response.ok) {
       console.log("Email sent successfully");
       alert("Email sent successfully!! Please check your mail");
     } else {
-      console.error("Error sending email");
-      alert("Error sending email");
+      const errorMessage = await response.text();
+      console.error("Error sending email:", errorMessage);
+      alert(`Error sending email: ${errorMessage}`);
     }
   } catch (error) {
     console.error("Error sending email:", error);
